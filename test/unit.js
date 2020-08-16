@@ -6,7 +6,6 @@ import NoCookies from '../index';
 let cookieTestValue = '';
 
 describe('Unit test suit', function() {
-
   beforeEach('Mock document.cookie', function() {
     let mockedDocument = {};
     Object.defineProperty(mockedDocument, 'cookie', {
@@ -25,42 +24,49 @@ describe('Unit test suit', function() {
     cookieTestValue = '';
   });
 
-  it('Disable prevents accessors to cookie', function() {
+  it('disable() prevents accessors to cookie', function() {
     cookieTestValue = 'foo=1; ';
-    assert(document.cookie === cookieTestValue, true);
+    assert(document.cookie === cookieTestValue);
     NoCookies.disable();
-    assert(document.cookie === '', true);
+    assert(document.cookie === '');
     document.cookie = 'bar=1; ';
-    assert(document.cookie === '', true);
+    assert(document.cookie === '');
   });
 
-  it('Whitelisting cookie at disable', function() {
+  it('disable() with whitelisted cookie allows accessors', function() {
     cookieTestValue = 'foo=1; bar=2; ';
-    assert(document.cookie === cookieTestValue, true);
+    assert(document.cookie === cookieTestValue);
     NoCookies.disable(['foo']);
-    assert(document.cookie === 'foo=1; ', true);
+    assert(document.cookie === 'foo=1; ');
     document.cookie = 'foo=2; ';
-    assert(document.cookie === 'foo=2; ', true);
+    assert(document.cookie === 'foo=2; ');
   });
 
-  it('Set whitelisted cookie', function() {
+  it('disable() and set whitelisted cookie', function() {
     cookieTestValue = 'foo=1; ';
-    assert(document.cookie === cookieTestValue, true);
+    assert(document.cookie === cookieTestValue);
     NoCookies.disable(['bar']);
-    assert(document.cookie === '', true);
+    assert(document.cookie === '');
     document.cookie = 'bar=2; ';
-    assert(document.cookie === 'bar=2; ', true);
+    assert(document.cookie === 'bar=2; ');
   });
 
-  it('Enable back cookie after disable', function() {
+  it('enable() without prior disable() does nothing', function() {
     cookieTestValue = 'foo=1; ';
-    assert(document.cookie === cookieTestValue, true);
-    NoCookies.disable();
-    assert(document.cookie === '', true);
     NoCookies.enable();
-    assert(document.cookie === cookieTestValue, true);
+    assert(document.cookie === cookieTestValue);
     document.cookie = 'foo=2; ';
-    assert(document.cookie === 'foo=2; ', true);
+    assert(document.cookie === 'foo=2; ');
   });
 
+  it('enable() after prior disable() sets back native behavior', function() {
+    cookieTestValue = 'foo=1; ';
+    assert(document.cookie === cookieTestValue);
+    NoCookies.disable();
+    assert(document.cookie === '');
+    NoCookies.enable();
+    assert(document.cookie === cookieTestValue);
+    document.cookie = 'foo=2; ';
+    assert(document.cookie === 'foo=2; ');
+  });
 });
