@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'assert';
-import NoCookies from '../index';
+import NoCookies from '../index.js';
 
 let cookieTestValue = '';
 
