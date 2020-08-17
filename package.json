@@ -9,11 +9,11 @@
     "eslint": "eslint index.js test/*"
   },
   "keywords": [
-    "cookies",
+    "cookie",
     "cookielaw",
+    "CCPA",
     "javascript",
-    "browser",
-    "library"
+    "browser"
   ],
   "author": "Maxime Helen",
   "license": "ISC",
@@ -23,7 +23,7 @@
     "@babel/preset-env": "^7.10.4",
     "@babel/register": "^7.10.5",
     "eslint": "^7.7.0",
-    "eslint-config-standard": "^14.1.1",
+    "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-mocha": "^8.0.0",
     "eslint-plugin-node": "^11.1.0",
